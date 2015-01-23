@@ -5,6 +5,13 @@ export default Ember.Route.extend({
 
   actions: {
     login: function() {
+
+      this.store.findAll('post').then(function(posts) {
+        console.log('Login function is naughty and able to access data it should not', posts);
+      }, function(reason) {
+        console.log('Login function was protected from accessing posts because:', reason.statusText);
+      });
+
       var loginController = this.controllerFor('login');
       var username = loginController.get('username');
       var password = loginController.get('password');
@@ -28,4 +35,5 @@ export default Ember.Route.extend({
       });
     }
   }
+
 });

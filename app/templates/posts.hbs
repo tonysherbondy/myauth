@@ -1,1 +1,6 @@
 <p>Some posts here.</p>
+<ul>
+  {{#each post in model}}
+    <li>{{post.title}}</li>
+  {{/each}}
+</ul>
