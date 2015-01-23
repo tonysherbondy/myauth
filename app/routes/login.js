@@ -4,8 +4,6 @@ export default Ember.Route.extend({
   defaultRoute: 'posts',
 
   actions: {
-    // TODO Make this take username and password so we don't pull
-    // from controller
     login: function() {
       var loginController = this.controllerFor('login');
       var username = loginController.get('username');
