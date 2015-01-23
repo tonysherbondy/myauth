@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  defaultRoute: 'authenticated.posts',
+  defaultRoute: 'posts',
 
   actions: {
     // TODO Make this take username and password so we don't pull
