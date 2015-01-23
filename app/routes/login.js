@@ -9,20 +9,23 @@ export default Ember.Route.extend({
       var username = loginController.get('username');
       var password = loginController.get('password');
 
-      // TODO Move to auth server
-      if (username === 'tony' && password === 'p') {
-        localStorage.authToken = "auth-token-here";
-        var transition = this.get("session.savedTransition");
-        this.get("session").login();
+      // TODO This should be a post and not a get and the
+      // server should check username/pass not here
+      var that = this;
+      Ember.$.get('api/auth').then(function(data) {
+        if (username === 'tony' && password === 'p' && data.authToken) {
+          var transition = that.get("session.savedTransition");
+          that.get("session").login(data.authToken);
 
-        // If the user was going somewhere send them along otherwise
-        // go to some default
-        if (transition) {
-          transition.retry();
-        } else {
-          this.transitionTo(this.get('defaultRoute'));
+          // If the user was going somewhere send them along otherwise
+          // go to some default
+          if (transition) {
+            transition.retry();
+          } else {
+            that.transitionTo(that.get('defaultRoute'));
+          }
         }
-      }
+      });
     }
   }
 });

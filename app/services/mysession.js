@@ -1,12 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-  isLoggedIn: false,
+  isLoggedIn: Ember.computed.notEmpty('token'),
   savedTransition: null,
-  login: function() {
-    this.setProperties({ savedTransition: null, isLoggedIn: true });
+  token: function() {
+    return localStorage.authToken;
+  }.property(),
+  login: function(token) {
+    localStorage.authToken = token;
+    this.setProperties({ savedTransition: null, token: token });
   },
   logout: function() {
-    this.set('isLoggedIn', false);
+    delete localStorage.authToken;
+    this.notifyPropertyChange('token');
   }
 });
